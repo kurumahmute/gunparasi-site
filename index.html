@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Günparası</title>
+  <meta name="description" content="Günparası - Arkadaşlarınla güvenli ve şeffaf para döngüsü." />
+  <style>
+    :root {
+      --bg: #062f28;
+      --bg-soft: #0b3f36;
+      --card: rgba(255,255,255,0.08);
+      --card-border: rgba(255,255,255,0.12);
+      --gold: #d7b56d;
+      --mint: #8de0c1;
+      --text: #f5f7f6;
+      --muted: #c9d6d2;
+      --shadow: 0 20px 60px rgba(0,0,0,0.25);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(215,181,109,0.18), transparent 30%),
+        radial-gradient(circle at left center, rgba(141,224,193,0.12), transparent 28%),
+        linear-gradient(180deg, #041f1b 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), #f0d59e);
+      display: grid;
+      place-items: center;
+      color: #083329;
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(215,181,109,0.25);
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.96rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+      padding: 38px 0 48px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(215,181,109,0.35);
+      background: rgba(215,181,109,0.08);
+      color: #f4deb0;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -1.4px;
+    }
+
+    .highlight { color: var(--gold); }
+
+    .lead {
+      margin: 18px 0 28px;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 15px 22px;
+      border-radius: 16px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #f0d59e);
+      color: #0b2c24;
+      box-shadow: 0 12px 28px rgba(215,181,109,0.24);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .note {
+      color: #a9bab5;
+      font-size: 0.95rem;
+    }
+
+    .phone {
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+      border: 1px solid var(--card-border);
+      border-radius: 34px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      max-width: 410px;
+      margin: 0 auto;
+    }
+
+    .screen {
+      background: linear-gradient(180deg, #0c4438 0%, #083329 100%);
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen::before {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(215,181,109,0.24), transparent 65%);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.82rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .balance {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 8px 0 4px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .members {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .member {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding: 18px 0 56px;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(215,181,109,0.14);
+      color: var(--gold);
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .waitlist {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 14px;
+      border-radius: 20px;
+      max-width: 620px;
+    }
+
+    .waitlist input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: white;
+      border-radius: 14px;
+      padding: 15px 16px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .footer {
+      padding: 18px 0 48px;
+      color: #a8bbb6;
+      font-size: 0.92rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 18px;
+      }
+
+      .phone {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        padding-top: 14px;
+      }
+
+      .nav .links {
+        display: none;
+      }
+
+      .waitlist {
+        grid-template-columns: 1fr;
+      }
+
+      .screen {
+        min-height: 560px;
+      }
+
+      .logo-img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+      }
+
+      .brand-text {
+        font-size: 1.8rem;
+        font-weight: 800;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <img src="logo.png" alt="Günparası Logo" class="logo-img">
+        <span class="brand-text">Günparası</span>
+      </div>
+      <div class="links">
+        <a href="#nasil-calisir">Nasıl Çalışır?</a>
+        <a href="#erken-erisim">Erken Erişim</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <div class="badge">✨ Yakında yayında • Güvenli, şeffaf, sosyal</div>
+        <h1>
+          Arkadaşlarınla <span class="highlight">gün usulü</span><br />
+          para döngüsünü dijitale taşı.
+        </h1>
+        <p class="lead">
+          Günparası, arkadaş gruplarının para toplama ve sıra yönetimini kolaylaştıran yeni nesil bir deneyim sunar.
+          Kimin sırası geldi, kim ödedi, ne kadar kaldı — hepsi tek ekranda, net ve düzenli.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#erken-erisim">Erken erişime katıl</a>
+          <a class="btn btn-secondary" href="#nasil-calisir">Nasıl çalıştığını gör</a>
+        </div>
+
+        <div class="note">İlk kullanıcılar için erken erişim ve özel gün grubu oluşturma avantajı.</div>
+
+        <form class="waitlist" id="erken-erisim" onsubmit="handleSubmit(event)">
+          <input type="email" id="email" placeholder="E-posta adresini gir" required />
+          <button class="btn btn-primary" type="submit">Listeye katıl</button>
+        </form>
+        <p class="note" id="successMessage" style="display:none; margin-top:12px; color:#f4deb0;">Kaydın alındı. Çok yakında senden haberimiz olacak.</p>
+      </div>
+
+      <div class="phone">
+        <div class="screen">
+          <div class="topbar">
+            <div>
+              <div class="muted" style="font-size:0.85rem;">Hoş geldin</div>
+              <div style="font-weight:800; font-size:1.15rem;">Günüm Var 💸</div>
+            </div>
+            <div class="pill">Aktif Gün</div>
+          </div>
+
+          <div class="card">
+            <div class="muted">Bu ay toplanan</div>
+            <div class="balance">₺48.000</div>
+            <div class="muted">8 kişilik grup • Sonraki sıra: Ayşe</div>
+            <div class="members">
+              <div class="member">Ayşe ✅</div>
+              <div class="member">Mert ✅</div>
+              <div class="member">Zeynep ⏳</div>
+              <div class="member">Deniz ✅</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="font-weight:700; margin-bottom:10px;">Bu ayın akışı</div>
+            <div class="muted" style="line-height:1.8;">
+              • 24 Nisan: Ödeme toplama açıldı<br />
+              • 27 Nisan: 6 kişi katkı yaptı<br />
+              • 30 Nisan: Sıra Ayşe’ye geçti
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="font-weight:700; margin-bottom:10px;">Neden Günparası?</div>
+            <div class="muted" style="line-height:1.8;">
+              Şeffaf takip, kolay sıra yönetimi, grup içi iletişim ve daha düzenli bir gün deneyimi.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="steps" id="nasil-calisir">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Grubunu oluştur</h3>
+        <p>Arkadaşlarını ekle, gün miktarını belirle ve ödeme döngünü birkaç dakikada başlat.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Sırayı yönet</h3>
+        <p>Kimin sırası geldiğini, kimlerin ödeme yaptığını ve kalan adımları tek ekranda takip et.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Şeffaf ilerle</h3>
+        <p>Karışıklığı azalt, güveni artır ve grup içi para akışını daha düzenli hale getir.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© 2026 Günparası. Tüm hakları saklıdır.</div>
+      <div>gunparasi.com</div>
+    </footer>
+  </div>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      const emailInput = document.getElementById('email');
+      const successMessage = document.getElementById('successMessage');
+      if (emailInput.value.trim()) {
+        successMessage.style.display = 'block';
+        emailInput.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
