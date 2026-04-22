@@ -47,29 +47,54 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       font-weight: 800;
       font-size: 1.2rem;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.2px;
     }
 
     .logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--gold), #f0d59e);
-      display: grid;
-      place-items: center;
-      color: #083329;
-      font-weight: 900;
-      box-shadow: 0 10px 30px rgba(215,181,109,0.25);
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+      filter: drop-shadow(0 6px 18px rgba(215,181,109,0.18));
     }
 
     .nav a {
       color: var(--muted);
       text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.96rem;
+      margin-left: 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-title {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      color: var(--text);
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(215,181,109,0.9);
     }
 
     .hero {
@@ -334,17 +359,6 @@
       .screen {
         min-height: 560px;
       }
-
-      .logo-img {
-        width: 64px;
-        height: 64px;
-        object-fit: contain;
-      }
-
-      .brand-text {
-        font-size: 1.8rem;
-        font-weight: 800;
-      }
     }
   </style>
 </head>
@@ -352,8 +366,11 @@
   <div class="container">
     <nav class="nav">
       <div class="brand">
-        <img src="logo.png" alt="Günparası Logo" class="logo-img">
-        <span class="brand-text">Günparası</span>
+        <img src="logo.png" alt="Günparası Logo" class="logo" />
+        <div class="brand-text">
+          <div class="brand-title">Günparası</div>
+          <div class="brand-subtitle">Sosyal Finans</div>
+        </div>
       </div>
       <div class="links">
         <a href="#nasil-calisir">Nasıl Çalışır?</a>
